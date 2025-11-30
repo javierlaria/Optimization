@@ -266,11 +266,18 @@ def example_production_problem():
     """
     
     # Primal problem definition
-    c = np.array([2.0, 3.0])        # Cost coefficients
-    A = np.array([[1.0, 2.0],       # Constraint matrix
+    c1 = np.array([2.0, 3.0])        # Cost coefficients
+    A1 = np.array([[1.0, 2.0],       # Constraint matrix
                   [2.0, 1.0]])
-    b = np.array([4.0, 5.0])        # RHS vector
+    b1 = np.array([4.0, 5.0])        # RHS vector
     
+    c = np.array([2.1, 3.2, 5.6, 10.45, 1.45, 0.39])        # Cost coefficients
+    A = np.array([[1.0, 2.0, 0, 1, 0.5, 4.5],       # Constraint matrix
+                  [2.0, 1.0, 10.0, 2.0, 2.5, 1.6],
+                  [2.0, 0, 5.3, 2, 0, 0],
+                  [0, 0, 4.3, 6.4, 0, 2.0]])
+    b = np.array([4.0, 5.0, 2.5, 2.6]) 
+
     # Create and solve
     problem = PrimalDualLP(c, A, b)
     primal_sol = problem.solve_primal()
@@ -280,10 +287,7 @@ def example_production_problem():
     problem.verify_duality(primal_sol, dual_sol)
     problem.verify_complementary_slackness(primal_sol, dual_sol)
     
-    print("\n" + "="*80)
-    print("INTERPRETATION")
-    print("="*80)
-    print("The Lagrange multipliers (dual variables) represent shadow prices:")
+    print("\nThe Lagrange multipliers (dual variables) represent shadow prices:")
     print("- They show how much the objective would improve per unit increase")
     print("  in the right-hand side of each constraint.")
     print("- In this production problem, they indicate the marginal value of")
